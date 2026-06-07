@@ -1,0 +1,31 @@
+name: 毎朝ニュース更新
+
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          pip install feedparser pdf2image pillow
+          sudo apt-get install -y poppler-utils
+      - run: mkdir -p maritime_pdf
+      - env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python news_reader.py
+      - run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Actions"
+          git add index.html
+          git diff --staged --quiet || git commit -m "ニュース更新: $(TZ='Asia/Tokyo' date '+%Y/%m/%d %H:%M')"
+          git push
