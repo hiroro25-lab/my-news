@@ -120,7 +120,7 @@ def fetch_rss_news():
 def pdf_to_images_base64(pdf_path):
     try:
         from pdf2image import convert_from_path
-        images = convert_from_path(str(pdf_path), dpi=72, first_page=1, last_page=4)
+        images = convert_from_path(str(pdf_path), dpi=72, first_page=1)
         result = []
         for img in images:
             w, h = img.size
