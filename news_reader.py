@@ -291,6 +291,7 @@ def generate_html(all_news, maritime_articles):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ロジニュース</title>
+<link rel="apple-touch-icon" href="icon.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{{--bg:#f7f4ef;--surface:#fff;--text:#1a1a1a;--text-muted:#666;--border:#e0dbd4;--shadow:0 2px 12px rgba(0,0,0,0.08);}}
