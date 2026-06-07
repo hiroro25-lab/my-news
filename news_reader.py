@@ -24,10 +24,12 @@ PDF_FOLDER = Path("maritime_pdf")  # リポジトリ内のフォルダ
 
 RSS_SOURCES = {
     "経済・ビジネス": [
-        {"name": "東洋経済オンライン",    "url": "https://toyokeizai.net/list/feed/rss"},
-        {"name": "ビジネスインサイダー",   "url": "https://www.businessinsider.jp/feed/index.xml"},
-        {"name": "日経新聞",             "url": "https://www.nikkei.com/rss/index.rss"},
-    ],
+    {"name": "東洋経済オンライン",    "url": "https://toyokeizai.net/list/feed/rss"},
+    {"name": "ビジネスインサイダー",   "url": "https://www.businessinsider.jp/feed/index.xml"},
+    {"name": "日経新聞",             "url": "https://www.nikkei.com/rss/index.rss"},
+    {"name": "ロイター経済",          "url": "https://feeds.reuters.com/reuters/JPBusinessNews"},
+    {"name": "朝日新聞 経済",         "url": "https://www.asahi.com/rss/asahi/business.rdf"},
+],
     "テクノロジー・IT": [
         {"name": "ITmedia NEWS",   "url": "https://rss.itmedia.co.jp/rss/2.0/news_bursts.xml"},
         {"name": "Gigazine",       "url": "https://gigazine.net/news/rss_2.0/"},
@@ -44,6 +46,7 @@ RSS_SOURCES = {
     ],
     "物流": [
         {"name": "LNEWS",             "url": "https://lnews.jp/feed",                             "filter": False},
+        {"name": "LOGISTICS TODAY", "url": "https://www.logi-today.com/feed", "filter": False},
         {"name": "物流ウィークリー",    "url": "https://www.weekly-net.co.jp/feed",                 "filter": False},
         {"name": "カーゴニュース",      "url": "https://www.cargonews.co.jp/feed",                  "filter": False},
         {"name": "NHK",               "url": "https://www3.nhk.or.jp/rss/news/cat0.xml",          "filter": True},
