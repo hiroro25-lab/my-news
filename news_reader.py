@@ -13,7 +13,7 @@ import base64
 import io
 import urllib.request
 import urllib.error
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 # =============================================
@@ -244,7 +244,6 @@ def generate_html(all_news, maritime_articles):
         "物流":                      ("#1a3030", "#e6f4f1", "🚚"),
         "マリタイムデーリーニュース": ("#1a2a4a", "#e8eef8", "🚢"),
     }
-    now = datetime.now().strftime("%Y年%m月%d日 %H:%M")
 
     if maritime_articles:
         all_news["マリタイムデーリーニュース"] = maritime_articles
