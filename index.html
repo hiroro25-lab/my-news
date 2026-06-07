@@ -51,7 +51,7 @@
 <body>
 <header>
   <h1>🚢 ロジニュース</h1>
-  <span class="update-time">更新: 2026年06月07日 15:21 (JST)</span>
+  <span class="update-time">更新: 2026年06月07日 15:29 (JST)</span>
 </header>
 <nav class="tab-nav"><button class="tab-btn active" data-tab="tab0" style="--accent:#1a3a5c">📈 経済・ビジネス <span class="badge">24</span></button>
 <button class="tab-btn " data-tab="tab1" style="--accent:#0d3b2e">💻 テクノロジー・IT <span class="badge">16</span></button>
@@ -589,6 +589,15 @@
                 <article class="card">
                     <div class="card-meta">
                         <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 06:27</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143401000.html" target="_blank">ラオス 洞窟閉じ込め 残る2人の捜索事実上終了 依然行方不明</a></h3>
+                    
+                    <p class="card-summary">東南アジアのラオス中部で5月、大雨による浸水などで洞窟に閉じ込められた住民7人のうち依然、行方のわかっていない2人の捜索について地元当局は6日で事実上、活動を終了しました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
                         <span class="pub-date">2026/06/07 06:18</span>
                     </div>
                     <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143391000.html" target="_blank">ICE取り締まりのミネアポリス 歌手プリンスの功績たたえる催し</a></h3>
@@ -648,15 +657,6 @@
                     <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143041000.html" target="_blank">カンボジア詐欺拠点の幹部か タイで日本人の男を拘束 警察発表</a></h3>
                     
                     <p class="card-summary">カンボジアの拠点で特殊詐欺に関与したとして去年、日本人の男女29人が逮捕された事件に関連し、タイの警察は6日、詐欺グループの幹部とみられる日本人の男を拘束したと発表しました。</p>
-                </article>
-                <article class="card">
-                    <div class="card-meta">
-                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
-                        <span class="pub-date">2026/06/06 20:47</span>
-                    </div>
-                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143171000.html" target="_blank">ウクライナがロシアの石油施設など攻撃 戦闘終結に向け圧力か</a></h3>
-                    
-                    <p class="card-summary">ロシアのプーチン大統領がウクライナとの直接会談を拒否する考えを示すなか、ゼレンスキー大統領は、ロシアの石油貯蔵施設などを攻撃したことを明らかにし、戦闘終結に向けて圧力をかけるねらいがあるとみられます。</p>
                 </article>
                 <article class="card">
                     <div class="card-meta">
@@ -864,6 +864,10 @@
       document.getElementById(btn.dataset.tab).classList.add('active');
     });
   });
+</script>
+<script>
+  if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(function(r){for(let reg of r)reg.unregister();});}
+  fetch(location.href,{cache:'no-store'}).then(()=>{if(!sessionStorage.getItem('loaded')){sessionStorage.setItem('loaded','1');location.reload(true);}});
 </script>
 </body>
 </html>
