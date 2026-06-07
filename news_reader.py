@@ -351,6 +351,19 @@ def generate_html(all_news, maritime_articles):
     }});
   }});
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+      for(let registration of registrations) {
+        registration.unregister();
+      }
+    });
+  }
+  window.addEventListener('load', function() {
+    fetch(window.location.href, {cache: 'no-store'})
+      .then(() => { if (!sessionStorage.getItem('reloaded')) { sessionStorage.setItem('reloaded', '1'); window.location.reload(true); }});
+  });
+</script>
 </body>
 </html>"""
 
