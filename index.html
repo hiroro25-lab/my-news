@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>マイニュース</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f7f4ef;--surface:#fff;--text:#1a1a1a;--text-muted:#666;--border:#e0dbd4;--shadow:0 2px 12px rgba(0,0,0,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:#1a1a2e;color:white;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 16px rgba(0,0,0,0.3);}
+  header h1{font-family:'Noto Serif JP',serif;font-size:1.6rem;letter-spacing:0.05em;}
+  .update-time{font-size:0.8rem;color:#aaa;}
+  .tab-nav{display:flex;gap:4px;padding:16px 24px 0;background:#1a1a2e;overflow-x:auto;}
+  .tab-btn{padding:10px 18px;border:none;border-radius:8px 8px 0 0;background:rgba(255,255,255,0.1);color:#ccc;font-family:'Noto Sans JP',sans-serif;font-size:0.85rem;cursor:pointer;white-space:nowrap;transition:all 0.2s;display:flex;align-items:center;gap:6px;}
+  .tab-btn:hover{background:rgba(255,255,255,0.2);color:white;}
+  .tab-btn.active{background:var(--bg);color:var(--accent);font-weight:700;}
+  .badge{background:rgba(255,255,255,0.25);border-radius:12px;padding:1px 7px;font-size:0.75rem;}
+  .tab-btn.active .badge{background:rgba(0,0,0,0.1);}
+  .main{padding:0 24px 40px;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+  .panel-header{display:flex;align-items:center;gap:12px;padding:24px 0 16px;border-bottom:2px solid var(--panel-accent);margin-bottom:20px;}
+  .panel-icon{font-size:1.8rem;}
+  .panel-header h2{font-family:'Noto Serif JP',serif;font-size:1.4rem;color:var(--panel-accent);}
+  .article-count{margin-left:auto;font-size:0.8rem;color:var(--text-muted);background:var(--panel-bg);border:1px solid var(--border);border-radius:20px;padding:3px 12px;}
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+  .card{background:var(--surface);border-radius:10px;padding:18px;box-shadow:var(--shadow);border-top:3px solid var(--panel-accent);transition:transform 0.2s,box-shadow 0.2s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,0.12);}
+  .card-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+  .source-tag{color:white;font-size:0.7rem;padding:2px 8px;border-radius:4px;font-weight:700;}
+  .pub-date{font-size:0.75rem;color:var(--text-muted);}
+  .card-title{font-family:'Noto Serif JP',serif;font-size:0.95rem;line-height:1.6;margin-bottom:4px;}
+  .card-title a{color:var(--text);text-decoration:none;}
+  .card-title a:hover{color:var(--panel-accent);text-decoration:underline;}
+  .card-sub{font-size:0.82rem;color:var(--panel-accent);margin-bottom:6px;font-weight:500;}
+  .card-summary{font-size:0.8rem;color:var(--text-muted);line-height:1.6;}
+  .no-news{color:var(--text-muted);font-style:italic;padding:20px;}
+  @media(max-width:600px){
+    header{padding:14px 16px;}
+    header h1{font-size:1.2rem;}
+    .tab-nav{padding:10px 8px 0;}
+    .tab-btn{padding:8px 12px;font-size:0.78rem;}
+    .main{padding:0 12px 32px;}
+    .cards-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>📰 マイニュース</h1>
+  <span class="update-time">更新: 2026年06月07日 04:53 (JST)</span>
+</header>
+<nav class="tab-nav"><button class="tab-btn active" data-tab="tab0" style="--accent:#1a3a5c">📈 経済・ビジネス <span class="badge">16</span></button>
+<button class="tab-btn " data-tab="tab1" style="--accent:#0d3b2e">💻 テクノロジー・IT <span class="badge">16</span></button>
+<button class="tab-btn " data-tab="tab2" style="--accent:#3b1a1a">🏛 政治・社会（国内） <span class="badge">15</span></button>
+<button class="tab-btn " data-tab="tab3" style="--accent:#2c1a4a">🌍 国際ニュース <span class="badge">16</span></button>
+<button class="tab-btn " data-tab="tab4" style="--accent:#1a3030">🚚 物流 <span class="badge">5</span></button>
+</nav>
+<main class="main">
+        <div id="tab0" class="tab-panel active" style="--panel-bg:#e8f0fe;--panel-accent:#1a3a5c">
+            <div class="panel-header">
+                <span class="panel-icon">📈</span>
+                <h2>経済・ビジネス</h2>
+                <span class="article-count">16件の記事</span>
+            </div>
+            <div class="cards-grid">
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 03:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946525?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">｢男子ゴルフは宝の山！｣——ポテンシャルを活かせていなかった男子ツアー､投資ファンド主導で株式会社化へ | ライフ | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">男子ゴルフツアーが長年の低迷から脱却を図り､新会社J-Tourによる運営体制へと大きく舵を切ります。巨額投資やデジタル戦略など､商業価値を最大化する改革の全貌と､その成否を左右するポイントとは？</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 02:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946837?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">実はインフレに弱いFIRE､労働は｢インフレ高耐性資産｣ 『働く人が減っていく国でこれから起きること』河田皓史氏に聞く | ライフ | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">いま話題になっている本の著者に､じっくりとインタビュー。今回は『働く人が減っていく国でこれから起きること』の著者､みずほ総合研究所 調査部 主席エコノミストの河田晧史氏に話を聞きました。FIRE…</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 02:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946320?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">55%が｢YouTube｣を利用も､いまだ｢ブラウザ検索｣が強い《新車を買う時》の情報収集の仕方 | ビジネス | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">クルマ選びでも､動画の影響力は確実に強まっている。だが､その存在感は実際のところどの程度なのか。市場調査会社のインテージが昨年実施した調査をもとに､新車購入の検討時におけるYouTubeアプ…</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 01:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/947173?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">中国で広がる｢陪伴（付き添い）経済｣､登山から外食まで有料で相手サービス…学生や若いギグワーカーが担い手に | ビジネス | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">中国で今､登山や旅行､食事まで｢付き添い｣を有料で提供するサービスが急拡大しています。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 01:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946949?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">部下の｢たたき台｣を見てフィードバックが空回りする上司が知らないこと。優秀な上司が見極める｢4つのレベル｣とは | キャリア・教育 | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">多様な職場での経験を重ねた萩原雅裕氏が提唱する｢叩かれるたたき台｣理論。部下の未完成なアウトプットをどう受け止め､成長につなげるべきか——。上司が見極めるべき4つのレベルとは？フィードバックの本質を…</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 00:30</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946301?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">なぜ｢ひつまぶし｣は全国区に？ノドグロずし､ギョロッケ…魚料理に刻まれた土地の記憶を生活史研究家がたどる | ライフ | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">関西出身の生活史研究家･阿古真理さんが､日本各地の｢魚｣にまつわる思い出深い料理を巡ります。名古屋名物ひつまぶし､兵庫･城崎温泉のノドグロずし､佐賀のギョロッケ――それぞれの土地に根付く味わいと､食…</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 00:20</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/947156?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">【牛肉産業に激震】生肉を食べる寄生ウジ虫｢新世界ラセンウジバエ｣､テキサス州で2例目検出 | 政治・経済・投資 | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">全米の牛肉産業に激震。テキサス州で肉食寄生虫｢新世界ラセンウジバエ｣が再び確認されました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">東洋経済オンライン</span>
+                        <span class="pub-date">2026/06/07 00:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://toyokeizai.net/articles/-/946875?utm_source=rss&utm_medium=http&utm_campaign=link_back" target="_blank">映画『マイケル』で性的虐待疑惑がカットされた理由　遺族の意向ではない｢想定外の事情｣とは？ | ライフ | 東洋経済オンライン</a></h3>
+                    
+                    <p class="card-summary">世界的な注目を集めるマイケル･ジャクソンの伝記映画『Michael／マイケル』がついに日本公開。観客と批評家で賛否が分かれる本作は､表現されなかった部分や法的な事情も話題ですが､彼の光と影の人生にあ…</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/06 23:30</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2606-inside-one-of-the-largest-aircraft-graveyards-arizona/" target="_blank">米アリゾナ州にある世界最大級の「航空機の墓場」を見てみよう…急成長する数百万ドルビジネスの舞台裏</a></h3>
+                    
+                    <p class="card-summary">米アリゾナ州にある世界最大級の「航空機の墓場」ピナル・エアパークは、機体の整備や改修、リサイクルを行う重要なハブでもあります。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/06 23:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2605-western-arms-makers-line-up-test-weapons-ukraine-battlefields/" target="_blank">西側兵器メーカーがウクライナに集結…実戦で自社兵器をテスト</a></h3>
+                    
+                    <p class="card-summary">防衛業界の幹部によると、企業が自社の兵器や軍事技術をウクライナで実戦テストできるプログラム「テスト・イン・ウクライナ」には、すでに数百社が関心を示しており、その数は今も増え続けているそうです。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/06 22:25</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/279213f/" target="_blank">マイクロソフトの社風を一変させた“再興の立役者”サティア・ナデラがすすめる必読書11冊</a></h3>
+                    
+                    <p class="card-summary">マイクロソフトのサティア・ナデラCEOが同社を立て直せた背景には読書の存在があります。彼の尋常ではない読書量の中から、実際に経営において効果を発揮した11冊の本を紹介します。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/06 08:30</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2606-spacex-ipo-anthropic-openai-stock-spcx-ai-index/" target="_blank">「超大型IPOが市場を圧迫する」との懸念は“誇張”されている――シティはそう指摘する</a></h3>
+                    
+                    <p class="card-summary">シティ（Citi）のアナリストらは、市場構造や流動性への影響に対する懸念が高まるなか、市場はスペースX（SpaceX）、オープンAI（OpenAI）、アンソロピック（Anthropic）のIPOを吸収できるとしています。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/06 06:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2505-savings-tips-for-early-retirees-financial-independence-fire-advice/" target="_blank">「支出ゼロ月間」や考え方の転換など、FIREを達成した人々からの節約アドバイス</a></h3>
+                    
+                    <p class="card-summary">節約上手な人たちは、目指すべきなのは日々の小さな楽しみをすべて我慢することではなく、大切なのは、お金を何に使っているのかを意識することだと話しています。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/05 23:30</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2605-russia-using-new-jet-powered-drone-response-interceptors-ukraine/" target="_blank">ロシア「新型ジェット推進式ドローン」を実戦投入…ウクライナの迎撃ドローン「大きな戦果」に対抗</a></h3>
+                    
+                    <p class="card-summary">ウクライナ国防省幹部によると、ロシアの新型ジェット推進式ドローンに関しては、すでに対抗策の構築に着手していると語っています。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/05 23:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/2605-first-class-train-photos-the-gran-class-on-hokuriku-shinkansen-11/" target="_blank">北陸新幹線からあのオリエント急行まで…世界で最も豪華な列車14選</a></h3>
+                    
+                    <p class="card-summary">床暖房完備の広々としたキャビンから、快適なリクライニングシート、無料の贅沢な食事まで——世界各地の鉄道が提供するファーストクラスの中をのぞいてみましょう。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3a5c">ビジネスインサイダー</span>
+                        <span class="pub-date">2026/06/05 22:35</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.businessinsider.jp/article/struggling-with-forgetting-what-i-read-b/" target="_blank">【佐藤優】読書しても忘れてしまう…。佐藤さんも活用する「KGB式記憶術」と「3回読み」とは</a></h3>
+                    
+                    <p class="card-summary">「読書したそばから忘れていってしまう」という読者から、知の巨人・佐藤優さんに相談が来ました。佐藤さんは、忘れてしまう理由として、2つのパターンを指摘します。</p>
+                </article></div>
+        </div>
+        <div id="tab1" class="tab-panel " style="--panel-bg:#e6f4ea;--panel-accent:#0d3b2e">
+            <div class="panel-header">
+                <span class="panel-icon">💻</span>
+                <h2>テクノロジー・IT</h2>
+                <span class="article-count">16件の記事</span>
+            </div>
+            <div class="cards-grid">
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/07 00:46</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/07/news024.html" target="_blank">Gemini需要急増でGoogleがSpaceXと月額9億2000万ドルの大型契約</a></h3>
+                    
+                    <p class="card-summary">SpaceXがGoogleにAIコンピューティング能力を提供する契約を結んだことが、SECへの提出文書で明らかになった。NVIDIA製GPUなどを月額9億2000万ドルで利用する。SpaceXにとって5月のAnthropicに続く大型インフラ契約となる。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/06 22:22</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/07/news022.html" target="_blank">ChatGPTに「ロックダウンモード」　プロンプトインジェクションによる情報漏えい対策</a></h3>
+                    
+                    <p class="card-summary">OpenAIは、ChatGPTに新たなセキュリティ機能「ロックダウンモード」の提供を開始した。プロンプトインジェクション攻撃によるデータ流出リスクを抑えるためのオプションで、有効にするとWebブラウジングや外部サービスへの接続機能が制限される。機密データを扱い、厳格な保護を求める個人や組織を想定している。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/06 22:14</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/07/news016.html" target="_blank">パトレイバー大好きマンガ家が新作「EZY」を見たら、フィジカルAIな近未来にノスタルジーを感じた件</a></h3>
+                    
+                    <p class="card-summary">「機動警察パトレイバー」の最新シリーズ「機動警察パトレイバー EZY（イズィー）」の「File 1」が5月15日より劇場公開中です。ボクも子供の頃から大好きだった作品。さっそく見に行ってきました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/05 11:20</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/05/news124.html" target="_blank">moomoo証券、監視委が処分勧告　NISA対象外を「対象」と虚偽説明　顧客対応も「著しく杜撰」</a></h3>
+                    
+                    <p class="card-summary">証券取引等監視委員会は6月5日、moomoo証券に行政処分を行うよう金融庁に勧告した。NISA対象外の米国ETF・ETN計78銘柄を「対象商品」と偽って販売したほか、株式の出庫申請の一律拒否など複数の不備を指摘。投資者保護上重大な問題があると判断した。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/05 11:20</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/05/news123.html" target="_blank">新「マイナアプリ」アイコン公開　松本デジタル相「マイナちゃんが消えてしまうわけではない」</a></h3>
+                    
+                    <p class="card-summary">デジタル庁の松本尚デジタル相は6月5日、夏ごろ提供開始予定の「マイナアプリ」のアプリアイコンを公開した。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/05 10:40</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/05/news119.html" target="_blank">家庭用PCでも数秒でサーバを“落とせる”、HTTP/2の脆弱性をCodexが発見　さくらインターネットも対策</a></h3>
+                    
+                    <p class="card-summary">米セキュリティ企業のCalifが6月3日（現地時間）、少しの通信量でWebサーバに過剰な負荷をかけ停止させるDoS攻撃手法「HTTP/2 Bomb」の注意喚起を行い、その深刻さから話題になっている。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/05 09:35</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/05/news116.html" target="_blank">キューバでVisa・Mastercardが利用停止に　在キューバ日本国大使館「現金の持参を」　渡航者に注意喚起</a></h3>
+                    
+                    <p class="card-summary">在キューバ日本国大使館は6月3日、6月6日以降キューバ国内で米VISAと米Mastercardが使えなくなるとして注意を呼びかけた。キューバ中央銀行の発表に基づくもので、米トランプ政権による対キューバ制裁強化が背景にある。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">ITmedia NEWS</span>
+                        <span class="pub-date">2026/06/05 07:25</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.itmedia.co.jp/news/articles/2606/05/news110.html" target="_blank">ミスで“永久無料”の人気ゲーム「PICO PARK：Classic」配信停止へ　1000万DLも「ずっと無料はよくなかった」</a></h3>
+                    
+                    <p class="card-summary">「急にごめんね　ダウンロードしてくれた1000万人ありがとね！」</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/07 04:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260607-openai-lockdown-mode/" target="_blank">OpenAIがプロンプトインジェクション攻撃からユーザーの機密情報を保護するためのロックダウンモードを発表</a></h3>
+                    
+                    <p class="card-summary">OpenAIがプロンプトインジェクション攻撃からユーザーの機密情報を保護するための「Lockdown Mode(ロックダウンモード)」を発表しました。続きを読む...</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/07 03:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260607-super-productivity/" target="_blank">無料でタイムボックスと時間追跡が使える高度なToDoリストアプリ「Super Productivity」、セルフホスト可能でカレンダー・Jira・GitHubなどからタスクをインポート可能</a></h3>
+                    
+                    <p class="card-summary">仕事のタスク整理にはToDoリストが便利ですが、作業時間の記録や課題管理まで含めると複数のツールに分散してしまい今日実際に使える時間と積み残したタスクの全体像をつかみにくく、優先順位の判断に余計なコストがかかります。そこで、タイムボックスと時間追跡を標準で備え、CalDAVやiCal形式のカレンダーやJira・GitHubなどからタスクを直接インポートできる無料でオープンソースのToDoリストアプリ「Super Productivity</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 23:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260607-grandma-streamer-swatting/" target="_blank">孫のがん治療費を稼ぐためにマインクラフトを配信していた81歳のおばあちゃんがスワッティング被害に遭う</a></h3>
+                    
+                    <p class="card-summary">81歳のおばあちゃん配信者が、配信者の自宅に特殊部隊を突撃させる嫌がらせ「スワッティング」の被害に遭ってしまいました。おばあちゃんは無事とのことです。続きを読む...</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 14:51</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260606-google-will-pay-spacex-920-million-usd-per-month/" target="_blank">GoogleがSpaceXの計算能力にアクセスするため月額1500億円弱を支払う契約を締結</a></h3>
+                    
+                    <p class="card-summary">AnthropicがSpaceXのスーパーコンピューター「Colossus 1」使用のために、月額12億5000万ドル(約2000億円)を支払う契約を結んだことが2026年5月に明らかになっていますが、これに続いて、GoogleもSpaceXに月額9億2000万ドル(約1470億円)を支払う契約を結んだことがわかりました。続きを読む...</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 14:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260606-daily-rhythms-slow-biological-aging/" target="_blank">規則正しい生活リズムで暮らすことが生物学的老化を遅らせる鍵かもしれない</a></h3>
+                    
+                    <p class="card-summary">「毎日同じ時間帯に寝て、同じ時間帯に起きる」という規則正しい生活を送ることは健康にとって重要ですが、つい週末になると夜更かししてしまったり、交代勤務で一定の生活リズムを守ることが難しかったりすることもあります。新たな研究では、規則正しい生活パターンを維持することが、生物学的老化を遅らせる役に立つ可能性があると示されました。続きを読む...</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 11:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260606-skysend/" target="_blank">無料でファイル・メモ共有ができ日本語化済みの「SkySend」、有効期限や最大ダウンロード数で自動削除設定でき、エンドツーエンド暗号化をサポートしてオープンソースでセルフホスト可能</a></h3>
+                    
+                    <p class="card-summary">ファイルや機密情報をクラウドで共有すると、送信後もサーバー上にデータが残り続けるケースがほとんどです。「SkySend」はブラウザ内で暗号化を完結し、有効期限や最大ダウンロード数に達したタイミングでデータを自動削除、さらに日本語UIでアカウント不要のまま無料で使え、セルフホストにも対応したオープンソースツールとして公開されています。続きを読む...</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 10:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260606-beryl-7-adguard/" target="_blank">モバイルルーター「Beryl 7」上でAdGuardを動かしあらゆるアプリで広告ブロック＆スマホをつないでUSBテザリングなどさまざまな機能を試してみたよレビュー</a></h3>
+                    
+                    <p class="card-summary">中国に本拠を置くネットワーク機器メーカー・GL.iNetのモバイルルーター「Beryl 7」は、持ち運びに適したコンパクトさと優れたVPN速度を両立しているほか、スマートフォンから簡単な設定をするだけで、ネットワークを使う場合に丸ごと広告ブロックできたり、端末を指定して特定のサイトにアクセスできなくするペアレンタルコントロールが設定できたり、一時的なユーザーやIoT機器をメインネットワークから隔離するゲストWi-Fiを設定できたりと、さ</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#0d3b2e">Gigazine</span>
+                        <span class="pub-date">2026/06/06 09:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://gigazine.net/news/20260606-llm-checker/" target="_blank">無料で自分のPCで動かせるローカルAIモデルがわかる「LLM Checker」</a></h3>
+                    
+                    <p class="card-summary">「LLM Checker」は自分のPCのハードウェアをスキャンしローカルで実行可能なLLMを推薦してくれるCLIツールであり、Ollamaと完全に統合されていることを特徴としています。続きを読む...</p>
+                </article></div>
+        </div>
+        <div id="tab2" class="tab-panel " style="--panel-bg:#fce8e6;--panel-accent:#3b1a1a">
+            <div class="panel-header">
+                <span class="panel-icon">🏛</span>
+                <h2>政治・社会（国内）</h2>
+                <span class="article-count">15件の記事</span>
+            </div>
+            <div class="cards-grid">
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 03:41</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143271000.html" target="_blank">関東甲信と東海が梅雨入り 四国や近畿など激しい雨に注意</a></h3>
+                    
+                    <p class="card-summary">前線や低気圧の影響で九州南部では局地的な大雨となったほか、東日本でも雲が広がり、気象庁は7日午前11時、「関東甲信と東海が梅雨入りしたとみられる」と発表しました。四国や近畿などでは非常に激しい雨が降るおそれがあり、土砂災害などに十分注意が必要です。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 04:29</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143311000.html" target="_blank">サッカーW杯日本代表 新ルール意識した練習 練習場はまた変更</a></h3>
+                    
+                    <p class="card-summary">今月11日に開幕するサッカーワールドカップ北中米大会に向けてメキシコで合宿を行っている日本代表は6日、今大会、導入される新ルールなどを意識した練習を行いました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 03:03</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143321000.html" target="_blank">ドジャース 大谷翔平 7試合ぶり11号ツーランホームラン</a></h3>
+                    
+                    <p class="card-summary">大リーグ、ドジャースの大谷翔平選手が6日、エンジェルス戦に1番・指名打者で先発出場し、1回に打者一巡して迎えた第2打席で左中間へ今シーズン11号となるツーランホームランを打ちました。大谷選手は5月29日以来7試合ぶり、33打席ぶりのホームランです。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 04:26</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143161000.html" target="_blank">軍事作戦開始から100日 仲介国パキスタン内相がイラン訪問</a></h3>
+                    
+                    <p class="card-summary">停滞するアメリカとイランの協議をめぐり、仲介国パキスタンの内相がイランを訪れ、事態の打開に向けて意見を交わすとみられます。一方、イランが凍結資産の解除を求める中、アメリカのベッセント財務長官の関係者は中東の湾岸諸国の被害の再建にイランの資産を利用できるように措置を講じる方針を明らかにし、両国間の新たな火種となる可能性もあります。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 04:11</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143341000.html" target="_blank">北朝鮮キム・ヨジョン氏 米中首脳会談後の米側の発表を否定</a></h3>
+                    
+                    <p class="card-summary">北朝鮮のキム・ジョンウン（金正恩）総書記の妹のヨジョン（与正）氏は談話を出し、5月の米中首脳会談で、北朝鮮の非核化を共通の目標として確認したとするアメリカ側の発表を否定しました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/07 02:26</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143281000.html" target="_blank">米ロサンゼルス 移民の一斉摘発から1年で反対集会</a></h3>
+                    
+                    <p class="card-summary">アメリカ西部ロサンゼルスで滞在資格のない移民の一斉摘発が行われてから6日で1年となるのに合わせ、強硬な移民の取り締まりに反対する集会が開かれました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">NHK 主要</span>
+                        <span class="pub-date">2026/06/06 20:35</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143181000.html" target="_blank">長野 天龍村 85歳妻をバットで殴るなどし殺害か 88歳夫を逮捕</a></h3>
+                    
+                    <p class="card-summary">6日、長野県天龍村で同居する85歳の妻を木製バットで殴ったり、刃物で切りつけたりして殺害したとして、88歳の夫が殺人の疑いで逮捕されました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV641RJTV64PITB00LM.html?ref=rss" target="_blank">日本酒の二つの品評会、広島で開催　地元の林酒造が最高賞をW受賞</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV670S24V67OXIE00BM.html?ref=rss" target="_blank">関東甲信、東海が梅雨入り　関東甲信は平年並み、東海は1日遅く</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV6212F2V62UTIL02DM.html?ref=rss" target="_blank">声をあげたLGBTQ、日本版のヒストリー本　「当事者以外も手に」</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV6320SLV63UTIL007M.html?ref=rss" target="_blank">ネトフリ「ボーイフレンド」プロデューサーが語る、世界ヒットの内幕</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV642FCHV64ONFB00PM.html?ref=rss" target="_blank">外国籍職員の採用取りやめ？「国籍要件の復活」急ぐ三重県知事の狙い</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV650RGGV65UTPB00YM.html?ref=rss" target="_blank">最大20倍の運賃値上げ高すぎる？　秘境走る大井川鉄道の魅力と課題</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV664DTZV66PJLB00TM.html?ref=rss" target="_blank">遊泳中おぼれたか、富山市で中2の13歳少年が死亡　海中で発見</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#3b1a1a">朝日新聞</span>
+                        <span class="pub-date"></span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www.asahi.com/articles/ASV663HFJV66IIPE00BM.html?ref=rss" target="_blank">砂川5人死傷飲酒事故11年 恩師のカーネーション、新たな居場所へ</a></h3>
+                    
+                    <p class="card-summary"></p>
+                </article></div>
+        </div>
+        <div id="tab3" class="tab-panel " style="--panel-bg:#f3e8fd;--panel-accent:#2c1a4a">
+            <div class="panel-header">
+                <span class="panel-icon">🌍</span>
+                <h2>国際ニュース</h2>
+                <span class="article-count">16件の記事</span>
+            </div>
+            <div class="cards-grid">
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 04:32</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143151000.html" target="_blank">中国が台湾東の海域で特別取り締まり 日本とフィリピンに対抗</a></h3>
+                    
+                    <p class="card-summary">日本とフィリピンが先月、海洋境界を画定するための正式交渉の開始を決定したことに中国が反発を強め、海警局がパトロールを行ったのに続いて、交通運輸省も6日、台湾の東の海域で、特別取り締まりを実施しました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 04:26</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143161000.html" target="_blank">軍事作戦開始から100日 仲介国パキスタン内相がイラン訪問</a></h3>
+                    
+                    <p class="card-summary">停滞するアメリカとイランの協議をめぐり、仲介国パキスタンの内相がイランを訪れ、事態の打開に向けて意見を交わすとみられます。一方、イランが凍結資産の解除を求める中、アメリカのベッセント財務長官の関係者は中東の湾岸諸国の被害の再建にイランの資産を利用できるように措置を講じる方針を明らかにし、両国間の新たな火種となる可能性もあります。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 04:11</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143341000.html" target="_blank">北朝鮮キム・ヨジョン氏 米中首脳会談後の米側の発表を否定</a></h3>
+                    
+                    <p class="card-summary">北朝鮮のキム・ジョンウン（金正恩）総書記の妹のヨジョン（与正）氏は談話を出し、5月の米中首脳会談で、北朝鮮の非核化を共通の目標として確認したとするアメリカ側の発表を否定しました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 02:26</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143281000.html" target="_blank">米ロサンゼルス 移民の一斉摘発から1年で反対集会</a></h3>
+                    
+                    <p class="card-summary">アメリカ西部ロサンゼルスで滞在資格のない移民の一斉摘発が行われてから6日で1年となるのに合わせ、強硬な移民の取り締まりに反対する集会が開かれました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/07 00:00</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015128881000.html" target="_blank">【随時更新】ロシア ウクライナに軍事侵攻（6月7日の動き）</a></h3>
+                    
+                    <p class="card-summary">ロシアによるウクライナに対する軍事侵攻が続いています。ウクライナの各地でロシア軍とウクライナ軍が戦闘を続けていて、大勢の市民が国外へ避難しています。戦闘の状況や関係各国の外交など、ウクライナ情勢をめぐる7日（日本時間）の動きを随時更新でお伝えします。（日本とウクライナ、およびロシアのモスクワとは6時間の時差があります）</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/06 21:17</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143041000.html" target="_blank">カンボジア詐欺拠点の幹部か タイで日本人の男を拘束 警察発表</a></h3>
+                    
+                    <p class="card-summary">カンボジアの拠点で特殊詐欺に関与したとして去年、日本人の男女29人が逮捕された事件に関連し、タイの警察は6日、詐欺グループの幹部とみられる日本人の男を拘束したと発表しました。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/06 20:47</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143171000.html" target="_blank">ウクライナがロシアの石油施設など攻撃 戦闘終結に向け圧力か</a></h3>
+                    
+                    <p class="card-summary">ロシアのプーチン大統領がウクライナとの直接会談を拒否する考えを示すなか、ゼレンスキー大統領は、ロシアの石油貯蔵施設などを攻撃したことを明らかにし、戦闘終結に向けて圧力をかけるねらいがあるとみられます。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">NHK 国際</span>
+                        <span class="pub-date">2026/06/06 20:13</span>
+                    </div>
+                    <h3 class="card-title"><a href="http://www3.nhk.or.jp/news/html/20260607/k10015143131000.html" target="_blank">パレスチナ・ヨルダン川西岸で乳児がイスラエル軍に撃たれ死亡</a></h3>
+                    
+                    <p class="card-summary">イスラエルの占領下にあるパレスチナのヨルダン川西岸で家族の乗った車がイスラエル軍に銃撃されて赤ちゃんが死亡しました。イスラエル軍が、テロ対策などとして作戦を進める中、死者が増え続けています。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/06 04:13</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/ckgpg7p77leo?at_medium=RSS&at_campaign=rss" target="_blank">プーチン氏、ゼレンスキー氏との会談は「意味がない」　戦争終結のための対面協議を拒否</a></h3>
+                    
+                    <p class="card-summary">ロシアのプーチン大統領は5日、ウクライナのゼレンスキー大統領と会談することに何の意味も見いだせないと述べた。ゼレンスキー氏は前日、両国の戦争終結のためにプーチン氏に直接会談を呼びかけたことを明らかにしていた。こうした中、ウクライナは5日、アゾフ海と、ロシアが占領する地域の沖合で、盗んだウクライナ産穀物などを運搬していたとして、船舶5隻をドローン攻撃したと発表した。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/06 04:09</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/cz020ke38e8o?at_medium=RSS&at_campaign=rss" target="_blank">米軍、イランのドローンとレーダー施設を攻撃と発表</a></h3>
+                    
+                    <p class="card-summary">米軍は5日、ホルムズ海峡に向けて発射されたイランの「片道攻撃用ドローン」4機を撃墜したと発表した。「地域の海上交通に差し迫った脅威をもたらしていた」と主張している。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/06 03:53</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/ckgpg7g1151o?at_medium=RSS&at_campaign=rss" target="_blank">習氏、7年ぶりに北朝鮮を訪れ金氏と会談へ　どんなことが話し合われるのか</a></h3>
+                    
+                    <p class="card-summary">中国の習国家主席が8～9日に北朝鮮を訪問し、金総書記と会談する。両国の国営メディアが5日、報じた。習氏の訪朝は約7年ぶり。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/05 02:51</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/c7949eg3yyqo?at_medium=RSS&at_campaign=rss" target="_blank">ゼレンスキー氏、プーチン氏に直接会談を提案　公開書簡で</a></h3>
+                    
+                    <p class="card-summary">ウクライナのゼレンスキー大統領は4日、ロシアのプーチン大統領に対し、戦争終結のために直接会談を呼びかけたと明らかにした。プーチン氏に宛てた公開書簡を発表した。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/05 03:09</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/crrpr7lk725o?at_medium=RSS&at_campaign=rss" target="_blank">ヒズボラ、イスラエルとレバノンが合意した停戦を拒否</a></h3>
+                    
+                    <p class="card-summary">レバノンのイスラム教シーア派組織ヒズボラは4日、イスラエルとレバノンの間の停戦条件を強く拒否した。この停戦合意はアメリカが支援しているもの。イランが支援するヒズボラの最高指導者ナイム・カセム師は声明で、これまでの交渉はレバノンにとって「無駄」で「屈辱的」なもので、「レバノン国民の幅広い層」はこれを断固として拒否していると、強い表現で述べた。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/05 09:07</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/crlpl2xrj15o?at_medium=RSS&at_campaign=rss" target="_blank">AIの進化、遅らせる策が必要　米アンソロピック共同創業者がBBC番組で主張</a></h3>
+                    
+                    <p class="card-summary">米アンソロピックの共同創業者ジャック・クラーク氏が、人工知能（AI）の進化を遅らせる策が必要だと訴えている。AIが人間のインプットなしに発展できる段階に近づいていると、同氏は警告している。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/05 08:20</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/clypwwp51qvo?at_medium=RSS&at_campaign=rss" target="_blank">ストレスと疲労、食料や水の問題も……ホルムズ海峡で足止めされている船員たち</a></h3>
+                    
+                    <p class="card-summary">アメリカとイスラエルが2月にイランに戦争を仕掛けて以来、約2万人もの船員らが、ホルムズ海峡の内側やその周辺で足止めされている。国際海事機関（IMO）の推計では、こうした船は約1600隻に上る。</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#2c1a4a">BBC Japan</span>
+                        <span class="pub-date">2026/06/05 09:01</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://www.bbc.com/japanese/articles/cq5p5jzpe87o?at_medium=RSS&at_campaign=rss" target="_blank">【2026年サッカー男子W杯】 アメリカ、メキシコ、カナダは相違を乗り越えられるのか　初の3カ国共催</a></h3>
+                    
+                    <p class="card-summary">サッカー男子のワールドカップの開幕が目前に迫っている。今大会は、アメリカ、カナダ、メキシコによる、初の3カ国共催となる。この3カ国の関係は必ずしも良好とはいえないが、大会はうまくいくのか。</p>
+                </article></div>
+        </div>
+        <div id="tab4" class="tab-panel " style="--panel-bg:#e6f4f1;--panel-accent:#1a3030">
+            <div class="panel-header">
+                <span class="panel-icon">🚚</span>
+                <h2>物流</h2>
+                <span class="article-count">5件の記事</span>
+            </div>
+            <div class="cards-grid">
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3030">物流ウィークリー</span>
+                        <span class="pub-date">2026/06/04 15:45</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://weekly-net.co.jp/news/196581/" target="_blank">ワンロジ　白石副社長「運送会社に寄り添う」</a></h3>
+                    
+                    <p class="card-summary">吉岡泰一郎社長率いるワンロジ（東京都新宿区）に、副社長として白石絵梨氏が加わった。 &#160; 古巣のトラボックス（同渋谷区）には新卒から入社し、交流会の企画・運営などさまざまな業務を経験。参加者から「アナウンサーをや [&#8230;]</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3030">物流ウィークリー</span>
+                        <span class="pub-date">2026/06/04 15:30</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://weekly-net.co.jp/news/196439/" target="_blank">物流連国際業務委員会　海運のリスク回避へ「企業単独ではなく共同で」</a></h3>
+                    
+                    <p class="card-summary">物流連（長澤仁志会長）はこのほど、国際業務委員会（伴野拓司委員長、日本郵船）を開催、会員企業や国交省からＷｅｂも含め２３人が参加した。 ホルムズ海峡の動向など海運を取り巻くリスクが顕在化していることから「委員会として情報 [&#8230;]</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3030">物流ウィークリー</span>
+                        <span class="pub-date">2026/06/04 15:15</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://weekly-net.co.jp/news/196516/" target="_blank">厚木第一地区会　横断旗寄贈「交通事故防止の一助に」</a></h3>
+                    
+                    <p class="card-summary">神奈川県厚木市、愛川町、清川村の運送事業者で構成される神奈川トラック運送事業団体厚木第一地区会（鈴木紀夫会長）は、会員が拠点を置く３自治体に対して横断旗を寄贈した。 ４月７日に、鈴木会長、大塚淳副会長、坂本学副会長が愛川 [&#8230;]</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3030">物流ウィークリー</span>
+                        <span class="pub-date">2026/06/04 15:01</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://weekly-net.co.jp/company/197512/" target="_blank">宮岡運輸　女性ドライバー積極的に募集　新車やラップバスでＰＲ</a></h3>
+                    
+                    <p class="card-summary">【埼玉】タワークレーンの輸送を手掛ける宮岡運輸（宮岡耕治社長、入間市）は昨年、女性のドライバーを採用した。 毛塚麻由美氏は自動車整備学校を卒業しており、１級整備士免許を取得後、モータースポーツの海外競技にダンプを運転して [&#8230;]</p>
+                </article>
+                <article class="card">
+                    <div class="card-meta">
+                        <span class="source-tag" style="background:#1a3030">物流ウィークリー</span>
+                        <span class="pub-date">2026/06/04 15:01</span>
+                    </div>
+                    <h3 class="card-title"><a href="https://weekly-net.co.jp/news/196472/" target="_blank">配車マン不足も深刻化　業務過多で現場限界　「労働時間を守れない」</a></h3>
+                    
+                    <p class="card-summary">物流業界ではドライバー不足が声高に叫ばれているが、配車マンの不足も懸念されている。 &#160; 大阪府河内地域の運送経営者は「配車業務に加え、新規営業や日報、タコグラフの管理。さらに特車通行許可制度の申請など業務量が多 [&#8230;]</p>
+                </article></div>
+        </div></main>
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn,.tab-panel').forEach(el=>el.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
