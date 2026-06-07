@@ -247,7 +247,7 @@ def generate_html(all_news, maritime_articles):
 
     if maritime_articles:
         all_news["マリタイムデーリーニュース"] = maritime_articles
-now = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日 %H:%M")
+    now = datetime.now(timezone(timedelta(hours=9))).strftime("%Y年%m月%d日 %H:%M")
     tabs_html = ""
     panels_html = ""
 
